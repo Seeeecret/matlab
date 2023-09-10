@@ -1,0 +1,28 @@
+% 读取 Excel 文件中的坐标数据
+file_path = 'D:\File\学习相关\笔记\竞赛\数学建模\A题\附件(带z轴).xlsx';
+
+data = xlsread(file_path);
+
+% 分别获取 X、Y 和 Z 坐标数据
+x = data(:, 1);
+y = data(:, 2);
+z = data(:, 3);
+
+x_special = 0; % 特殊点的X坐标
+y_special = 0; % 特殊点的Y坐标
+special_color = 'r';
+special_size = 100
+
+% 创建一个三维坐标系
+figure;
+scatter3(x, y, z,10,'MarkerEdgeColor','blue','MarkerFaceColor', 'black','Marker','o','DisplayName','定日镜'); % 使用 'filled' 表示点填充
+% 设置坐标轴标签
+xlabel('X轴');
+ylabel('Y轴');
+zlabel('Z轴');
+
+% 设置网格
+grid on;
+
+% 添加标题
+title('三维坐标系示例');

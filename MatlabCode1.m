@@ -1,3 +1,5 @@
+%建立二维坐标
+
 % 步骤1：导入Excel文件
 file_path = 'D:\File\学习相关\笔记\竞赛\数学建模\A题\附件.xlsx';
 data = xlsread(file_path);
