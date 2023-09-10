@@ -100,8 +100,6 @@ for i = 1:length(dHR_values)
     end
     eta_at_values(i) = eta_at;
 end
-%data_table = table([], [], [],[],[],[], 'VariableNames', {'date ',' time ',' cosine_efficiency ',' shadow_blocking_efficiency ',' truncation_efficiency ',' overall_optical_efficiency'});
-%data_table = table([], [], [],[],[],[],'VariableNames',{'Date','Time','CosineLoss','ShadowLoss','TruncationLoss','OpticalEfficiency'});
 % 创建一个字符串元胞数组，包含列变量名称
 varNames = {'date', 'time', 'eta_cos', 'eta_sb', 'eta_trunc', 'eta'};
 
@@ -114,12 +112,8 @@ times = 3;%指定使用12点的数据
 for months = 1:length(m21_date)
     for times = 1:length(local_time)
 % 计算每个镜子的阴影阻挡效率（eta_sb）
-        eta_sb = 1; % 假设没有阴影阻挡损失
-%xlswrite(eta_sb, output_file_path,'Sheet1','Range','D2:','WriteVariableNames', false);
- 
-%xlswrite(m21_date(months), output_file_path,'Sheet1''Range','A2','WriteVariableNames', false);
+        eta_sb = 0.873541102107966; % 模型总阴影阻挡损失
 
-%xlswrite(local_time(times), output_file_path,'Sheet',1,'Range','B2','WriteVariableNames', false);
 
 
 %xlswrite(eta_trunc, output_file_path,'Sheet',1,'Range','E2' ,'WriteVariableNames', false);
@@ -160,7 +154,7 @@ for months = 1:length(m21_date)
             %disp(cosine_loss);
             
             % 对于截断效率（eta_trunc），我们需要知道集热器接收到的能量和镜子反射的能量。其值已在文件中得到
-             eta_trunc = eta_trunc_values(i);
+             eta_trunc = eta_trunc_values(i) * cosine_loss;
             
             eta_at = eta_at_values(i);
             eta_cos = eta_cos_values(i); % 已经计算了余弦效率

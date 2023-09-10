@@ -2,7 +2,7 @@
 
 % 步骤1：导入Excel文件
 file_path = 'D:\File\学习相关\笔记\竞赛\数学建模\A题\附件.xlsx';
-data = xlsread(file_path);
+data = xlsread(file_path);s
 
 % 步骤2：创建散点图
 x = data(:, 1); % 提取X坐标数据

@@ -1,7 +1,7 @@
 % 求平均输出热功率
 
 % 读取每月平均光学效率
-data = xlsread('D:\Programs\MatlabSoftware\bin\project\testproject\eta_average_2.xls');
+data = xlsread('D:\Programs\MatlabSoftware\bin\project\testproject\eta_average_4.xls');
 
 N_data = xlsread('D:\File\学习相关\笔记\竞赛\数学建模\A题\附件.xlsx');
 N = length(N_data);
@@ -18,7 +18,7 @@ for month = 1:12
             E = E + DNI_value * 36 * eta_average(month);
         end
     end
-    E_per_months21(month) = E;
+    E_per_months21(month) = E/(5*36);
     E_per_months21_total = E_per_months21_total + E;
 end
 E_in_year_average = 365*E_per_months21_total/12

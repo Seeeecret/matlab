@@ -1,9 +1,15 @@
-%计算光学效率
+%计算光学效率，修改下列不同的值，生成不同日期的图片
+
+months = 6;%指定使用第6月的数据
+times = 3;%指定使用12点的数据
 
 %导入Excel文件
 file_path = 'D:\File\学习相关\笔记\竞赛\数学建模\A题\附件(带z轴).xlsx';
 data = xlsread(file_path);
+file_path_2 = 'D:\File\学习相关\笔记\竞赛\数学建模\A题\附件(TE).xlsx';
+data_2 = xlsread(file_path_2);
 
+eta_trunc_values = data_2(:,3);
 % 定义目标的经纬度和海拔
 lon = 98.5; % 东经为正
 lat = 39.4; % 北纬为正
@@ -103,17 +109,11 @@ varNames = {'date', 'time', 'cosine_loss', 'eta_sb', 'eta_trunc', 'eta'};
 % 创建一个含有一行数据的表格，并指定列变量名称
 data_table = cell2table(cell(1, numel(varNames)), 'VariableNames', varNames);
 
-months = 12;%指定使用第6月的数据
-times = 5;%指定使用12点的数据
+
 
 
 % 计算每个镜子的阴影阻挡效率（eta_sb）
-        eta_sb = 1; % 假设没有阴影阻挡损失
-%xlswrite(eta_sb, output_file_path,'Sheet1','Range','D2:','WriteVariableNames', false);
- 
-%xlswrite(m21_date(months), output_file_path,'Sheet1''Range','A2','WriteVariableNames', false);
-
-%xlswrite(local_time(times), output_file_path,'Sheet',1,'Range','B2','WriteVariableNames', false);
+        eta_sb = 0.873541102107966; % 模型阴影阻挡损失
 
 % 对于截断效率（eta_trunc），我们需要知道集热器接收到的能量和镜子反射的能量。
 % 但是，从给定数据中无法直接获得这些信息，因此假设截断效率为1。
@@ -152,8 +152,11 @@ times = 5;%指定使用12点的数据
             norm_unit_heliostat_collector_vector = norm(unit_heliostat_collector_vector);
             norm_mirror_normal_vector= norm(mirror_normal_vector);
             cosine_loss = dot_product / (norm_unit_heliostat_collector_vector * norm_mirror_normal_vector);
-            eta_cos_values(i) = 1 - cosine_loss;
+            eta_cos_values(i) = cosine_loss;
             %disp(cosine_loss);
+            
+             % 对于截断效率（eta_trunc），我们需要知道集热器接收到的能量和镜子反射的能量。其值已在文件中得到
+             eta_trunc = eta_trunc_values(i) * cosine_loss;
             
             eta_at = eta_at_values(i);
             eta_cos = eta_cos_values(i); % 假设已经计算了余弦效率
